@@ -1,12 +1,16 @@
-const ENVIRONMENT = process.env.NODE_ENV || "development";
-const config = require("./environments/" + ENVIRONMENT).config;
+const ENV = process.env.NODE_ENV || "development";
+const config = require("./environments/" + ENV).config;
 const express = require("express");
-const app = express();
-const apiRoutes = require("./routes/api-routes");
 const bodyParser = require("body-parser");
+const apiRoutes = require("./routes/api-routes");
+const mySqlSequelize = require("./database/mysql-db");
+const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }));
+mySqlSequelize.initDataBase();
 app.use(bodyParser.json());
 
-app.use("/api", apiRoutes.initApiRoutes());
-app.listen(config.port, () => console.log(`App Runing on port ${config.port}`));
+app.use("/api/v1/delilah", apiRoutes.initApiRoutes());
+
+app.listen(config.port, () => {
+  console.log(`App running on port ${config.port}`);
+});

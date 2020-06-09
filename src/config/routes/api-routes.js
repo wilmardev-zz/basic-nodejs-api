@@ -1,16 +1,15 @@
 const express = require("express");
-const apiValuesController = require("../../controllers/api-values-controller");
-const userController = require("../../controllers/user-controller");
+const usersController = require("../../controllers/users-controller");
+const authMiddleware = require("../middlewares/auth-middleware");
 
 const initApiRoutes = () => {
-  const routes = express.Router();
+  const router = express.Router();
 
-  routes.post("/values", apiValuesController.values);
-  routes.get("/user/:userName", userController.getUserGitHubByUserName);
+  router.get("/users", authMiddleware.validateJWT, usersController.getUsers);
+  router.post("/users", usersController.createUser);
+  router.put("/users", usersController.updateUser);
 
-  return routes;
+  return router;
 };
 
-module.exports = {
-  initApiRoutes,
-};
+module.exports = { initApiRoutes };
