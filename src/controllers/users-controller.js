@@ -10,11 +10,10 @@ const getUsers = (req, res) => {
 };
 
 const createUser = (req, res) => {
-  return res.status(200).json("Create Users");
+  return userService
+    .createUser()
+    .then((response) => res.status(201).json(response))
+    .catch((err) => res.status(500).json(err));
 };
 
-const updateUser = (req, res) => {
-  return res.status(200).json("Update Users");
-};
-
-module.exports = { getUsers, createUser, updateUser };
+module.exports = { getUsers, createUser };

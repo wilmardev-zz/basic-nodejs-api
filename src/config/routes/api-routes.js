@@ -6,8 +6,7 @@ const initApiRoutes = () => {
   const router = express.Router();
 
   router.get("/users", authMiddleware.validateJWT, usersController.getUsers);
-  router.post("/users", usersController.createUser);
-  router.put("/users", usersController.updateUser);
+  router.post("/user", usersController.createUser);
 
   return router;
 };
